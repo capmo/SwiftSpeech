@@ -1,54 +1,50 @@
 //
 //  Demos.swift
-//  
+//
 //
 //  Created by Cay Zhang on 2020/2/23.
 //
 
-import SwiftUI
 import Combine
 import Speech
+import SwiftUI
 
 public extension SwiftSpeech.Demos {
-    
-    struct Basic : View {
-        
+    struct Basic: View {
         var sessionConfiguration: SwiftSpeech.Session.Configuration
-        
+
         @State private var text = "Tap to Speak"
-        
+
         public init(sessionConfiguration: SwiftSpeech.Session.Configuration) {
             self.sessionConfiguration = sessionConfiguration
         }
-        
+
         public init(locale: Locale = .current) {
             self.init(sessionConfiguration: SwiftSpeech.Session.Configuration(locale: locale))
         }
-        
+
         public init(localeIdentifier: String) {
             self.init(locale: Locale(identifier: localeIdentifier))
         }
-        
+
         public var body: some View {
             VStack(spacing: 35.0) {
                 Text(text)
                     .font(.system(size: 25, weight: .bold, design: .default))
-                SwiftSpeech.RecordButton()
+                RecordButton()
                     .swiftSpeechToggleRecordingOnTap(sessionConfiguration: sessionConfiguration, animation: .spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0))
                     .onRecognizeLatest(update: $text)
-                
+
             }.onAppear {
                 SwiftSpeech.requestSpeechRecognitionAuthorization()
             }
         }
-        
     }
-    
-    struct Colors : View {
 
+    struct Colors: View {
         @State private var text = "Hold and say a color!"
 
-        static let colorDictionary: [String : Color] = [
+        static let colorDictionary: [String: Color] = [
             "black": .black,
             "white": .white,
             "blue": .blue,
@@ -58,7 +54,7 @@ public extension SwiftSpeech.Demos {
             "pink": .pink,
             "purple": .purple,
             "red": .red,
-            "yellow": .yellow
+            "yellow": .yellow,
         ]
 
         var color: Color? {
@@ -69,14 +65,14 @@ public extension SwiftSpeech.Demos {
                 .value
         }
 
-        public init() { }
+        public init() {}
 
         public var body: some View {
             VStack(spacing: 35.0) {
                 Text(text)
                     .font(.system(size: 25, weight: .bold, design: .default))
                     .foregroundColor(color)
-                SwiftSpeech.RecordButton()
+                RecordButton()
                     .accentColor(color)
                     .swiftSpeechRecordOnHold(locale: Locale(identifier: "en_US"), animation: .spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0))
                     .onRecognizeLatest(update: $text)
@@ -84,23 +80,21 @@ public extension SwiftSpeech.Demos {
                 SwiftSpeech.requestSpeechRecognitionAuthorization()
             }
         }
-
     }
 
-    struct List : View {
-
+    struct List: View {
         var sessionConfiguration: SwiftSpeech.Session.Configuration
 
         @State var list: [(session: SwiftSpeech.Session, text: String)] = []
-        
+
         public init(sessionConfiguration: SwiftSpeech.Session.Configuration) {
             self.sessionConfiguration = sessionConfiguration
         }
-        
+
         public init(locale: Locale = .current) {
             self.init(sessionConfiguration: SwiftSpeech.Session.Configuration(locale: locale))
         }
-        
+
         public init(localeIdentifier: String) {
             self.init(locale: Locale(identifier: localeIdentifier))
         }
@@ -112,7 +106,7 @@ public extension SwiftSpeech.Demos {
                         Text(pair.text)
                     }
                 }.overlay(
-                    SwiftSpeech.RecordButton()
+                    RecordButton()
                         .swiftSpeechRecordOnHold(
                             sessionConfiguration: sessionConfiguration,
                             animation: .spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0),

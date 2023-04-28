@@ -1,23 +1,22 @@
 //
 //  Authorization.swift
-//  
+//
 //
 //  Created by Cay Zhang on 2020/7/22.
 //
 
-import SwiftUI
 import Combine
 import Speech
+import SwiftUI
 
 extension SwiftSpeech {
-    
     public static func requestSpeechRecognitionAuthorization() {
         AuthorizationCenter.shared.requestSpeechRecognitionAuthorization()
     }
-    
+
     class AuthorizationCenter: ObservableObject {
         @Published var speechRecognitionAuthorizationStatus: SFSpeechRecognizerAuthorizationStatus = SFSpeechRecognizer.authorizationStatus()
-        
+
         func requestSpeechRecognitionAuthorization() {
             // Asynchronously make the authorization request.
             SFSpeechRecognizer.requestAuthorization { authStatus in
@@ -28,26 +27,26 @@ extension SwiftSpeech {
                 }
             }
         }
-        
+
         static let shared = AuthorizationCenter()
     }
 }
 
 @propertyWrapper public struct SpeechRecognitionAuthStatus: DynamicProperty {
     @ObservedObject var authCenter = SwiftSpeech.AuthorizationCenter.shared
-    
+
     let trueValues: Set<SFSpeechRecognizerAuthorizationStatus>
-    
+
     public var wrappedValue: SFSpeechRecognizerAuthorizationStatus {
         SwiftSpeech.AuthorizationCenter.shared.speechRecognitionAuthorizationStatus
     }
-    
+
     public init(trueValues: Set<SFSpeechRecognizerAuthorizationStatus> = [.authorized]) {
         self.trueValues = trueValues
     }
-    
+
     public var projectedValue: Bool {
-        self.trueValues.contains(SwiftSpeech.AuthorizationCenter.shared.speechRecognitionAuthorizationStatus)
+        trueValues.contains(SwiftSpeech.AuthorizationCenter.shared.speechRecognitionAuthorizationStatus)
     }
 }
 
