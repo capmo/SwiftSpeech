@@ -30,6 +30,8 @@ public struct RecordButton: View {
     @SpeechRecognitionAuthStatus var authStatus
     @State var scale: CGFloat = 1
 
+    public init() {}
+
     var backgroundColor: Color {
         switch state {
         case .pending:
