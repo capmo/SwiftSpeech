@@ -175,7 +175,7 @@ public extension SwiftSpeech.ViewModifiers {
         }
 
         fileprivate func endRecording() {
-            guard let session = recordingSession else { preconditionFailure("recordingSession is nil in \(#function)") }
+            guard let session = recordingSession else { return }
             AudioServicesPlaySystemSound(1118)
             feedbackGenerator.selectionChanged()
             recordingSession?.stopRecording()
