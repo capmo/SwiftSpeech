@@ -157,6 +157,9 @@ public extension SwiftSpeech.ViewModifiers {
             content
                 .gesture(gesture, including: $authStatus ? .gesture : .none)
                 .environment(\.swiftSpeechState, viewComponentState)
+                .onDisappear {
+                    endRecording()
+                }
         }
 
         fileprivate func startRecording() {
