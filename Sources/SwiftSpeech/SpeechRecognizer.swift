@@ -61,6 +61,9 @@ public class SpeechRecognizer {
             // Use `sessionConfiguration` to configure the recognition request
             recognitionRequest.shouldReportPartialResults = sessionConfiguration.shouldReportPartialResults
             recognitionRequest.requiresOnDeviceRecognition = sessionConfiguration.requiresOnDeviceRecognition
+            if #available(iOS 16, *) {
+                recognitionRequest.addsPunctuation = sessionConfiguration.addsPunctuation
+            }
             recognitionRequest.taskHint = sessionConfiguration.taskHint
             recognitionRequest.contextualStrings = sessionConfiguration.contextualStrings
             recognitionRequest.interactionIdentifier = sessionConfiguration.interactionIdentifier
