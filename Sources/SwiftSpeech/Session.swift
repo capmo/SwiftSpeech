@@ -91,6 +91,10 @@ public extension SwiftSpeech.Session {
         /// A Boolean value that determines whether a request must keep its audio data on the device.
         public var requiresOnDeviceRecognition: Bool = false
 
+        /// A Boolean value that indicates whether the recognised text should contain punctuation.
+        /// The default value is `true`. Applied on iOS 16 and later.
+        public var addsPunctuation: Bool = true
+
         /**
          An array of phrases that should be recognized, even if they are not in the system vocabulary.
          The default value is `[]`.
@@ -124,6 +128,7 @@ public extension SwiftSpeech.Session {
             taskHint: SFSpeechRecognitionTaskHint = .unspecified,
             shouldReportPartialResults: Bool = true,
             requiresOnDeviceRecognition: Bool = false,
+            addsPunctuation: Bool = true,
             contextualStrings: [String] = [],
             interactionIdentifier: String? = nil,
             audioSessionConfiguration: AudioSessionConfiguration = .recordOnly
@@ -132,6 +137,7 @@ public extension SwiftSpeech.Session {
             self.taskHint = taskHint
             self.shouldReportPartialResults = shouldReportPartialResults
             self.requiresOnDeviceRecognition = requiresOnDeviceRecognition
+            self.addsPunctuation = addsPunctuation
             self.contextualStrings = contextualStrings
             self.interactionIdentifier = interactionIdentifier
             self.audioSessionConfiguration = audioSessionConfiguration
